@@ -1,0 +1,203 @@
+@charset "utf-8";
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800);
+html, body {
+    padding: 0;
+    margin: 0;
+    /*color: #fff;*/
+    font-family: "Open Sans", Arial, Helvetica;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    /*-webkit-font-smoothing: antialiased;*/
+    /*-moz-osx-font-smoothing: grayscale;*/
+}
+
+.background-white {
+    background: #ffffff;
+}
+
+.fl {
+    float: left;
+}
+
+body {
+    padding: 0px;
+    margin: 0px;
+    background: #263d53;
+}
+
+header {
+    width: 100%;
+    height: 50px;
+    background: #ffffff;
+}
+
+header .wrapper {
+    /*position: relative;*/
+}
+
+header .notification {
+    float: right;
+    padding: 5px;
+    cursor: pointer;
+    position: relative;
+    right: 300px;
+    top: 7px;
+}
+
+header .notification:hover i {
+    color: #6F7E87;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+header i {
+    color: #9FB6C3;
+    font-size: 22px !important;
+    line-height: 24px !important;
+}
+
+header .count1 {
+    position: absolute;
+    top: 2px;
+    width: 15px;
+    font-size: 10px;
+    height: 14px;
+    padding-top: 0px;
+    left: 13px;
+}
+
+.common-count {
+    background: #18B5B5;
+    color: #ffffff;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    -ms-border-radius: 30px;
+    -o-border-radius: 30px;
+    border-radius: 30px;
+    text-align: center;
+    border: 1px solid #fff;
+}
+
+header .count2 {
+    width: 17px;
+    font-size: 12px;
+    height: 17px;
+    padding-top: 1px;
+    left: 13px;
+    padding-left: 1px;
+    margin-left: 3px;
+    margin-top: -2px;
+    padding-right: 1px;
+    padding-bottom: 1px;
+}
+
+.arrow-up {
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid #ffffff;
+    margin-left: 113px;
+}
+
+.notification-dropdown {}
+
+.closed {
+    position: absolute;
+    top: -9999px;
+}
+
+.dropdown-transition {
+    width: 260px;
+    position: absolute;
+    color: #2336AB;
+    right: 177px;
+    top: 48px;
+    -webkit-transform: translateY(18px);
+    -moz-transform: translateY(18px);
+    -o-transform: translateY(18px);
+    transform: translateY(18px);
+    /* -webkit-transition: -webkit-transform 0.4s, opacity 0.4s; */
+    -moz-transition: -moz-transform 0.4s, opacity 0.4s;
+    -ms-transition: -ms-transform 0.4s, opacity 0.4s;
+    -o-transition: -o-transform 0.4s, opacity 0.4s;
+    transition: transform 0.4s, opacity 0.4s;
+}
+
+.notification-dropdown .header {
+    background: #ffffff;
+    width: 100%;
+    height: 44px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom: 1px solid #D5DFE4;
+    font-size: 14px;
+    line-height: 18px;
+}
+
+.notification-dropdown .header .container {
+    width: 115px;
+    margin: 0px auto;
+    padding-top: 12px;
+}
+
+.notification-dropdown .items {
+    background: #E9EFF2;
+    width: 100%;
+    max-height: 256px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    overflow-y: auto;
+}
+
+.notification-dropdown .items .list-item {
+    padding: 14px;
+    font-size: 13px;
+    line-height: 18px;
+    border-bottom: 1px solid #D5DFE4;
+    height: 35px;
+    cursor: pointer;
+}
+
+.notification-dropdown .items .list-item:hover {
+    background: #DDECF3;
+}
+
+.new-item {
+    background: #DDECF3;
+}
+
+.notification-dropdown .items .list-item:last-child {
+    border-bottom: 0px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.notification-dropdown .items .list-item .image {
+    margin-right: 12px;
+}
+
+.notification-dropdown .items .list-item img {
+    width: 35px;
+    height: auto;
+    border-radius: 30px;
+}
+
+.notification-dropdown .items .list-item .text {
+    color: #a0b6c3;
+    width: 178px;
+    position: relative;
+    top: -1px;
+}
+
+.notification-dropdown .items .list-item .text b {
+    margin-right: 4px;
+    color: #6F7A87;
+}
