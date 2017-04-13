@@ -1,21 +1,31 @@
 import React, { Component } from 'react';
 import Notifications from './notifications';
+import axios from 'axios';
 
 class Main extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      notifs: [{
-        image: 'DD',
-        name: 'DD',
-        content: 'DD',
-      },
-      ],
+      notifs: [],
     };
+    this.loadFromDatabase = this.loadFromDatabase.bind(this);
   }
 
   componentDidMount() {
+    setInterval(() => {
+      this.loadFromDatabase();
+    }
+    , 3000)
+  }
+
+  loadFromDatabase() {
+    axios.get('http://localhost:3001/api/notifications/')
+      .then((res) => {
+        this.setState({
+          notifs: res.data.reverse(),
+        });
+      });
   }
 
   toggleDropDown() {
@@ -23,6 +33,10 @@ class Main extends Component {
     if (notifBox.classList.contains('closed')) {
       notifBox.classList.remove('closed');
       notifBox.classList.add('dropdown-transition');
+
+      // marking all notifications as read in database
+      axios.put('http://localhost:3001/api/notifications/');
+      
     } else {
       notifBox.classList.remove('dropdown-transition');
       notifBox.classList.add('closed');

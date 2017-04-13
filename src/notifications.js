@@ -5,23 +5,22 @@ class Notifications extends Component {
     super(props);
 
     this.state = {
-      notifs: this.props.notifs
+      notifs: this.props.notifs,
     };
   }
 
   render() {
     const list = this.props.notifs.map((notif, index) => (
-        <div className="list-item noti" key={index}>
-          <div className="image">
-            <img src={notif.image} alt="profile-pic" />
-          </div>
-          <div className="content">
-            <b>{notif.name}</b>
-            {notif.content}
-          </div>
+      <div className="list-item noti" key={index}>
+        <div className="image">
+          <img src={notif.image} alt="profile-pic" />
         </div>
-      )
-    );
+        <div className="content">
+          <b>{notif.name}</b>
+          {notif.content}
+        </div>
+      </div>
+    ));
 
     return (
       <div>
