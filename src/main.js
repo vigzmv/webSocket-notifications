@@ -4,12 +4,22 @@ import Notifications from './notifications';
 class Main extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
+      notifs: [{
+        image: 'DD',
+        name: 'DD',
+        content: 'DD',
+      },
+      ],
     };
   }
 
+  componentDidMount() {
+  }
+
   toggleDropDown() {
-    const notifBox = document.querySelector('.notification-dropdown');
+    const notifBox = document.querySelector('.dropdown');
     if (notifBox.classList.contains('closed')) {
       notifBox.classList.remove('closed');
       notifBox.classList.add('dropdown-transition');
@@ -21,25 +31,25 @@ class Main extends Component {
 
   render() {
     return (
-      <div>
-        <div className="notification" onClick={this.toggleDropDown}>
+      <div className="top-bar">
+        <div className="bell" onClick={this.toggleDropDown}>
           <i className="fa fa-bell-o" />
-          <div className="notify-count count1 common-count">
-            <div className="value">0</div>
+          <div className="pri-counter">
+            <b>0</b>
           </div>
         </div>
-        <div className="notification-dropdown closed">
-          <div className="arrow-up" />
+        <div className="dropdown closed">
+          <div className="arrow" />
           <div className="header">
             <div className="container">
-              <div className="text fl">Notifications</div>
-              <div className="notify-count common-count count2 fl">
-                <div className="value">0</div>
+              <div className="notif-Head">Notifications</div>
+              <div className="sec-counter">
+                <b>0</b>
               </div>
             </div>
           </div>
           <div className="items">
-            <Notifications />
+            <Notifications notifs={this.state.notifs} />
           </div>
         </div>
       </div>
