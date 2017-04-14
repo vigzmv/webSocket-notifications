@@ -1,8 +1,24 @@
 import React, { Component } from 'react';
-import Notifications from './notifications';
 import axios from 'axios';
+import Notifications from './notifications';
 
 class Main extends Component {
+
+  static toggleDropDown() {
+    const notifBox = document.querySelector('.dropdown');
+    if (notifBox.classList.contains('closed')) {
+      notifBox.classList.remove('closed');
+      notifBox.classList.add('dropdown-transition');
+
+      // marking all notifications as read in database
+      axios.put('http://localhost:3001/api/notifications/');
+
+    } else {
+      notifBox.classList.remove('dropdown-transition');
+      notifBox.classList.add('closed');
+    }
+  }
+
   constructor(props) {
     super(props);
 
@@ -13,10 +29,7 @@ class Main extends Component {
   }
 
   componentDidMount() {
-    setInterval(() => {
-      this.loadFromDatabase();
-    }
-    , 3000)
+    this.loadFromDatabase();
   }
 
   loadFromDatabase() {
@@ -25,28 +38,32 @@ class Main extends Component {
         this.setState({
           notifs: res.data.reverse(),
         });
+        this.loadFromSockets();
       });
   }
 
-  toggleDropDown() {
-    const notifBox = document.querySelector('.dropdown');
-    if (notifBox.classList.contains('closed')) {
-      notifBox.classList.remove('closed');
-      notifBox.classList.add('dropdown-transition');
+  loadFromSockets() {
+    const socket = window.io.connect('http://localhost:3001');
 
-      // marking all notifications as read in database
-      axios.put('http://localhost:3001/api/notifications/');
-      
-    } else {
-      notifBox.classList.remove('dropdown-transition');
-      notifBox.classList.add('closed');
-    }
+    // On reciveing new-notification from server through Sockets
+    // Update the View
+    socket.on('new-notification', (data) => {
+      this.setState({
+        notifs: [{
+          action: data.action,
+          name: data.name,
+          content: data.content,
+          read: data.read,
+          image: data.image,
+        }, ...this.state.notifs],
+      });
+    });
   }
 
   render() {
     return (
       <div className="top-bar">
-        <div className="bell" onClick={this.toggleDropDown}>
+        <div className="bell" onClick={this.constructor.toggleDropDown}>
           <i className="fa fa-bell-o" />
           <div className="pri-counter">
             <b>0</b>

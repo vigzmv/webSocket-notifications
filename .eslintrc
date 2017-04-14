@@ -6,5 +6,7 @@
   },
   "globals": {
     "document": true,
+    "window": true,
+    "io": true,
     }
 }
