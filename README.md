@@ -17,14 +17,14 @@ Explanation:
 
 6. Clicking on 'Delete all notifications' truncates the DB and reloads the page.
 
-Why Sockets ? Faster and smaller in size than http + suitable for these type of instant data transfer.
+Why WebSockets ? Faster and smaller in size than http + suitable for these type of instant data transfer.
 
 
 ### About the code
 Extensive use of JavaScript ES6. Short and Nice.  
 Strictly followed JavaScript style guide by [airbnb](https://github.com/airbnb/javascript), enforced the style guide using ESlint configs from [elsint-config-airbnb](https://www.npmjs.com/package/eslint-config-airbnb).  
 
-Can do the same using other tech stacks, but this is the way I preffered for it to  be **efficient, production ready and scalable** and also considering the given the short time period to code.
+Can do the same using other tech stacks, but this is the way I preffered for it to be **efficient, production ready and scalable** and also considering the given the short time period to code.
 
 View Layer: ReactJs
 - Could have also done the same with Vanilla JS, But React is faster, And I preffer it for dynamic, repeated component views.
@@ -58,14 +58,15 @@ $ npm install
 $ yarn install
 
 # build project
-$ npm build
+$ npm run build
 
 # Start server
-$ npm start
+$ npm run server
 ```
 Open [http://localhost:3001/](http://localhost:3001/)  
 Done!
 
+### Excited to work with you all.
 
 _Have any issues/problems/suggestion ?  
 Contact me: +91 8800949541 or vigzmv@outlook.com  

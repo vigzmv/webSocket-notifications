@@ -75,7 +75,10 @@ class Main extends Component {
   }
 
   deleteAll() {
-    axios.delete('http://localhost:3001/api/notifications/');
+    axios.delete('http://localhost:3001/api/notifications/')
+      .then(() => {
+        window.location.reload();
+      });
   }
 
   toggleDropDown() {

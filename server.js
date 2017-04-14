@@ -110,7 +110,7 @@ io.on('connection', (socket) => {
       // Push new notification to client
       socket.emit('new-notification', notification);
     });
-  }, 3000 + Math.floor(Math.random() * 4000));
+  }, 2000 + Math.floor(Math.random() * 2000));
 
   socket.on('disconnect', () => {
     clearInterval(notificationsPush);
