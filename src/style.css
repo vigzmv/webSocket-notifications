@@ -9,6 +9,14 @@ html, body {
     background: white;
 }
 
+.delete {
+  padding-top: 10px;
+  padding-left: 5px;
+  font-size: 10px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 .bell {
     padding: 5px;
     position: absolute;
@@ -35,7 +43,6 @@ html, body {
     color: #ffffff;
     border-radius: 100%;
     text-align: center;
-    border: 1px solid #fff;
     position: absolute;
     top: 0px;
     left: 16px;
@@ -71,7 +78,7 @@ html, body {
     opacity: 0;
 }
 
-.dropdown-transition {
+.transist {
     visibility: visible;
     opacity: 1;
     color: #2336AB;

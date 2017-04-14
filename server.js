@@ -55,6 +55,16 @@ router.put('/notifications', () => {
   });
 });
 
+router.delete('/notifications', (req, res) => {
+  Notifications.remove({}, (err) => {
+    if (err) {
+      console.log(err);
+    }
+    console.log('Database Truncated');
+    res.send('/');
+  });
+});
+
 app.use('/api', router);
 
 server.listen(port, () => {

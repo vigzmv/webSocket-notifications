@@ -10,7 +10,6 @@ class Main extends Component {
       notifs: [],
       unread: 0,
     };
-    this.loadFromDatabase = this.loadFromDatabase.bind(this);
   }
 
   componentDidMount() {
@@ -23,7 +22,7 @@ class Main extends Component {
       const bell = document.querySelector('.bell');
 
       if ((!(bell.contains(e.target) || notifBox.contains(e.target))) && (!notifBox.classList.contains('closed'))) {
-        notifBox.classList.remove('dropdown-transition');
+        notifBox.classList.remove('transist');
         notifBox.classList.add('closed');
 
         this.setReadAll();
@@ -40,7 +39,7 @@ class Main extends Component {
     // marking all notifications as read in database
     axios.put('http://localhost:3001/api/notifications/');
     this.setState({ unread: 0 });
-    this.state.notifs.forEach((notif) => {notif.read = true});
+    this.state.notifs.forEach((notif) => { notif.read = true; });
   }
 
   loadFromDatabase() {
@@ -59,8 +58,7 @@ class Main extends Component {
   loadFromSockets() {
     const socket = window.io.connect('http://localhost:3001');
 
-    // On reciveing new-notification from server through Sockets
-    // Update the View
+    // On reciveing new-notification from server through Sockets & Update the View
     socket.on('new-notification', (data) => {
       this.setState({
         notifs: [...this.state.notifs, {
@@ -76,19 +74,23 @@ class Main extends Component {
     });
   }
 
+  deleteAll() {
+    axios.delete('http://localhost:3001/api/notifications/');
+  }
+
   toggleDropDown() {
     const notifBox = document.querySelector('.dropdown');
     if (notifBox.classList.contains('closed')) {
       notifBox.classList.remove('closed');
-      notifBox.classList.add('dropdown-transition');
+      notifBox.classList.add('transist');
 
       axios.put('http://localhost:3001/api/notifications/');
       this.setState({ unread: 0 });
       setTimeout(() => {
-        this.state.notifs.forEach((notif) => { notif.read = true });
+        this.state.notifs.forEach((notif) => { notif.read = true; });
       }, 500);
     } else {
-      notifBox.classList.remove('dropdown-transition');
+      notifBox.classList.remove('transist');
       notifBox.classList.add('closed');
       this.setReadAll();
     }
@@ -97,6 +99,9 @@ class Main extends Component {
   render() {
     return (
       <div className="top-bar">
+        <div className="delete" onClick={this.deleteAll}>
+          Delete all Notifications from DB
+        </div>
         <div className="bell" onClick={this.toggleDropDown.bind(this)}>
           <i className="fa fa-bell-o" />
           <div className="pri-counter">
