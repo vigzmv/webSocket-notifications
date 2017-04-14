@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+
 const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
@@ -23,7 +24,7 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Acc' +
       'ess-Control-Request-Method, Access-Control-Request-Headers');
 
-  // cache or not ?
+  // no cache
   res.setHeader('Cache-Control', 'no-cache');
   next();
 });
@@ -45,10 +46,10 @@ router.get('/notifications', (req, res) => {
   });
 });
 
-router.put('/notifications', (req, res) => {
+router.put('/notifications', () => {
   Notifications.find((err, notifs) => {
     notifs.forEach((notif) => {
-      notif.read = true
+      notif.read = true;
       notif.save();
     });
   });
@@ -66,16 +67,23 @@ mongoose.connect('mongodb://wings:wings@ds161210.mlab.com:61210/wingify');
 
 
 // Dummy Data
-const image = ['d', 'dddd'];
-const name = ['vignesh', 'pooja', 'naveen'];
-const action = ['liked', 'commented', 'shared'];
+const image = ['http://prestige-gaming.ru/download/file.php?avatar=282_1422524289.jpeg',
+  'https://i.annihil.us/u/prod/marvel/i/mg/9/30/538cd33e15ab7/standard_xlarge.jpg',
+  'https://avatarfiles.alphacoders.com/755/75548.jpg',
+  'http://www.achievementstats.com/images/avatars/76561198088630121.jpg',
+];
+const name = ['Vignesh', 'Hiten', 'Shubham', 'Pooja', 'Astha'];
+const action = ['liked', 'commented on', 'shared'];
 const content = ['photo', 'post', 'video'];
 
 
-// Sockets
+// Socket config
 io.on('connection', (socket) => {
+  console.log('Connected');
+
   // On connection start pushing notifications to database
-  setInterval(() => {
+  const notificationsPush = setInterval(() => {
+    // create a random notification
     const notification = new Notifications();
     notification.image = image[Math.floor(Math.random() * image.length)];
     notification.name = name[Math.floor(Math.random() * name.length)];
@@ -87,10 +95,15 @@ io.on('connection', (socket) => {
       if (err) {
         // alert(err);
       }
-      console.log('Added notification');
+      console.log('Added New Notification');
 
       // Push new notification to client
       socket.emit('new-notification', notification);
     });
   }, 3000 + Math.floor(Math.random() * 4000));
+
+  socket.on('disconnect', () => {
+    clearInterval(notificationsPush);
+    console.log('Disconnected')
+  });
 });

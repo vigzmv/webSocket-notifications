@@ -1,6 +1,6 @@
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800);
+@import url('https://fonts.googleapis.com/css?family=Merriweather+Sans');
 html, body {
-    font-family: "Open Sans", Arial, Helvetica;
+    font-family: 'Merriweather Sans', sans-serif;
     background: #e57373;
 }
 
@@ -25,33 +25,35 @@ html, body {
 
 .notif-Head {
     display: inline-block;
+    font-weight: 600;
+    font-size: 15px;
+    color: #546E7A;
 }
 
 .pri-counter {
-    background: #2196F3;
+    background: #ef5350;
     color: #ffffff;
-    border-radius: 30px;
+    border-radius: 100%;
     text-align: center;
     border: 1px solid #fff;
     position: absolute;
-    top: 2px;
-    left: 15px;
-    width: 16px;
+    top: 0px;
+    left: 16px;
+    width: 17px;
     height: 15px;
     font-size: 10px;
-    padding-top: 0px;
+    padding-top: 1px;
 }
 
 .sec-counter {
-    background: #2196F3;
+    background: #ef5350;
     color: #ffffff;
-    border-radius: 30px;
+    border-radius: 100%;
     text-align: center;
-    width: 18px;
-    font-size: 12px;
+    width: 19px;
+    font-size: 13px;
     height: 18px;
-    padding: 1px;
-    margin-left: 3px;
+    margin-left: 5px;
     display: inline-block;
 }
 
@@ -102,60 +104,48 @@ html, body {
 }
 
 .dropdown .items {
-    background: #E9EFF2;
+    background: #f0f4f6;
     width: 100%;
     max-height: 256px;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     overflow-y: auto;
+    transition: background-color 0.5s;
 }
 
-.dropdown .items .list-item {
+.dropdown .items .li {
     padding: 14px;
     font-size: 13px;
     line-height: 18px;
-    border-bottom: 1px solid #D5DFE4;
+    border-bottom: 1px solid #cbd9e0;
     height: 35px;
     cursor: pointer;
 }
 
-.dropdown .items .list-item:hover {
-    background: #DDECF3;
+.dropdown .items .li:hover {
+    background: #cbd9e0;
 }
 
-.new-item {
-    background: #DDECF3;
+.new {
+    background: #e1e9ed;
+    transition: background-color 0.5s;
 }
 
-.dropdown .items .list-item:last-child {
-    border-bottom: 0px;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-}
-
-.dropdown .items .list-item .image {
-    margin-right: 10px;
-    margin-left: 10px;
+.dropdown .items .li .pic {
+    margin-right: 14px;
+    margin-left: 14px;
     display: inline-block;
     float: left;
 }
 
-.dropdown .items .list-item img {
+.dropdown .items .li img {
     width: 35px;
-    height: auto;
-    border-radius: 30px;
+    height: 34px;
+    border-radius: 100%;
 }
 
-.dropdown .items .list-item .content {
-    color: #a0b6c3;
-    width: 178px;
-    position: relative;
-    top: -1px;
-    float: left;
+.dropdown .items .li .content {
+    color: #3d5461;
+    width: 180px;
     display: inline-block;
-}
-
-.dropdown .items .list-item .text b {
-    margin-right: 4px;
-    color: #6F7A87;
 }

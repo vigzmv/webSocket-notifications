@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import FlipMove from 'react-flip-move';
 
 class Notifications extends Component {
   constructor(props) {
@@ -11,20 +12,25 @@ class Notifications extends Component {
 
   render() {
     const list = this.props.notifs.map((notif, index) => (
-      <div className="list-item noti" key={index}>
-        <div className="image">
+      <div className={notif.read ? 'li' : 'li new'} key={index}>
+        <div className="pic">
           <img src={notif.image} alt="profile-pic" />
         </div>
         <div className="content">
-          <b>{notif.name}</b>
-          {notif.content}
+          <b>{notif.name} </b> {notif.action} your {notif.content}
         </div>
       </div>
     ));
 
     return (
       <div>
-        {list}
+        <FlipMove
+          duration={200}
+          leaveAnimation="fade"
+          enterAnimation="fade"
+        >
+          {list.reverse()}
+        </FlipMove>
       </div>
     );
   }

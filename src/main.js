@@ -3,41 +3,55 @@ import axios from 'axios';
 import Notifications from './notifications';
 
 class Main extends Component {
-
-  static toggleDropDown() {
-    const notifBox = document.querySelector('.dropdown');
-    if (notifBox.classList.contains('closed')) {
-      notifBox.classList.remove('closed');
-      notifBox.classList.add('dropdown-transition');
-
-      // marking all notifications as read in database
-      axios.put('http://localhost:3001/api/notifications/');
-
-    } else {
-      notifBox.classList.remove('dropdown-transition');
-      notifBox.classList.add('closed');
-    }
-  }
-
   constructor(props) {
     super(props);
 
     this.state = {
       notifs: [],
+      unread: 0,
     };
     this.loadFromDatabase = this.loadFromDatabase.bind(this);
   }
 
   componentDidMount() {
+    // Load notifications from DB the first time view loads
     this.loadFromDatabase();
+
+    document.addEventListener('click', (e) => {
+      // console.log(e.target);
+      const notifBox = document.querySelector('.dropdown');
+      const bell = document.querySelector('.bell');
+
+      if ((!(bell.contains(e.target) || notifBox.contains(e.target))) && (!notifBox.classList.contains('closed'))) {
+        notifBox.classList.remove('dropdown-transition');
+        notifBox.classList.add('closed');
+
+        this.setReadAll();
+      }
+    });
+  }
+
+  setCount() {
+    const unread = this.state.notifs.filter(notif => !notif.read).length;
+    this.setState({ unread }); // ES6 shorthand object asign
+  }
+
+  setReadAll() {
+    // marking all notifications as read in database
+    axios.put('http://localhost:3001/api/notifications/');
+    this.setState({ unread: 0 });
+    this.state.notifs.forEach((notif) => {notif.read = true});
   }
 
   loadFromDatabase() {
     axios.get('http://localhost:3001/api/notifications/')
       .then((res) => {
         this.setState({
-          notifs: res.data.reverse(),
+          notifs: res.data,
         });
+        this.setCount();
+
+        // now just load notifications from sockets
         this.loadFromSockets();
       });
   }
@@ -49,24 +63,44 @@ class Main extends Component {
     // Update the View
     socket.on('new-notification', (data) => {
       this.setState({
-        notifs: [{
+        notifs: [...this.state.notifs, {
           action: data.action,
           name: data.name,
           content: data.content,
           read: data.read,
           image: data.image,
-        }, ...this.state.notifs],
+        }],
       });
+
+      this.setState({ unread: this.state.unread + 1 });
     });
+  }
+
+  toggleDropDown() {
+    const notifBox = document.querySelector('.dropdown');
+    if (notifBox.classList.contains('closed')) {
+      notifBox.classList.remove('closed');
+      notifBox.classList.add('dropdown-transition');
+
+      axios.put('http://localhost:3001/api/notifications/');
+      this.setState({ unread: 0 });
+      setTimeout(() => {
+        this.state.notifs.forEach((notif) => { notif.read = true });
+      }, 500);
+    } else {
+      notifBox.classList.remove('dropdown-transition');
+      notifBox.classList.add('closed');
+      this.setReadAll();
+    }
   }
 
   render() {
     return (
       <div className="top-bar">
-        <div className="bell" onClick={this.constructor.toggleDropDown}>
+        <div className="bell" onClick={this.toggleDropDown.bind(this)}>
           <i className="fa fa-bell-o" />
           <div className="pri-counter">
-            <b>0</b>
+            <b>{this.state.unread}</b>
           </div>
         </div>
         <div className="dropdown closed">
@@ -75,7 +109,7 @@ class Main extends Component {
             <div className="container">
               <div className="notif-Head">Notifications</div>
               <div className="sec-counter">
-                <b>0</b>
+                <b>{this.state.unread}</b>
               </div>
             </div>
           </div>
