@@ -1,3 +1,5 @@
+// @flow
+
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -20,9 +22,15 @@ app.use(bodyParser.json());
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Credentials', 'true');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT,DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Acc' +
-      'ess-Control-Request-Method, Access-Control-Request-Headers');
+  res.setHeader(
+    'Access-Control-Allow-Methods',
+    'GET,HEAD,OPTIONS,POST,PUT,DELETE'
+  );
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Acc' +
+      'ess-Control-Request-Method, Access-Control-Request-Headers'
+  );
 
   // no cache
   res.setHeader('Cache-Control', 'no-cache');
@@ -48,7 +56,7 @@ router.get('/notifications', (req, res) => {
 
 router.put('/notifications', () => {
   Notifications.find((err, notifs) => {
-    notifs.forEach((notif) => {
+    notifs.forEach(notif => {
       notif.read = true;
       notif.save();
     });
@@ -56,7 +64,7 @@ router.put('/notifications', () => {
 });
 
 router.delete('/notifications', (req, res) => {
-  Notifications.remove({}, (err) => {
+  Notifications.remove({}, err => {
     if (err) {
       console.log(err);
     }
@@ -71,24 +79,22 @@ server.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
 
-
 // Database
 mongoose.connect('mongodb://wings:wings@ds161210.mlab.com:61210/wingify');
 
-
 // Dummy Data
-const image = ['http://prestige-gaming.ru/download/file.php?avatar=282_1422524289.jpeg',
+const image = [
+  'http://prestige-gaming.ru/download/file.php?avatar=282_1422524289.jpeg',
   'https://i.annihil.us/u/prod/marvel/i/mg/9/30/538cd33e15ab7/standard_xlarge.jpg',
   'https://avatarfiles.alphacoders.com/755/75548.jpg',
-  'http://www.achievementstats.com/images/avatars/76561198088630121.jpg',
+  'http://www.achievementstats.com/images/avatars/76561198088630121.jpg'
 ];
 const name = ['Vignesh', 'Hiten', 'Shubham', 'Pooja', 'Astha'];
 const action = ['liked', 'commented on', 'shared'];
 const content = ['photo', 'post', 'video'];
 
-
 // Socket config
-io.on('connection', (socket) => {
+io.on('connection', socket => {
   console.log('Connected');
 
   // On connection start pushing notifications to database
@@ -101,7 +107,7 @@ io.on('connection', (socket) => {
     notification.content = content[Math.floor(Math.random() * content.length)];
     notification.read = false;
 
-    notification.save((err) => {
+    notification.save(err => {
       if (err) {
         // alert(err);
       }
@@ -114,6 +120,6 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', () => {
     clearInterval(notificationsPush);
-    console.log('Disconnected')
+    console.log('Disconnected');
   });
 });

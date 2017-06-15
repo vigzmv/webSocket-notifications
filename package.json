@@ -6,6 +6,7 @@
     "axios": "^0.16.1",
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
+    "flow-bin": "^0.48.0",
     "foreman": "^2.0.0",
     "marked": "^0.3.6",
     "mongoose": "^4.9.4",
