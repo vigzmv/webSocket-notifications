@@ -5,18 +5,12 @@ On first page load, Notifications are loaded from the Database, subsequent Notif
 
 Explanation:
 
-1. Page request: Page loads and it fetchs for notifications from DB. Notifications are rendered on page.
-2. Socket Connection Between Node Server and Client is established. Subsequent notifications will be sent to client using sockets.
-3. Node server generates new Notifications, pushed it to
-  - DB
-  - Client using socket
-
-
-1. On Page refresh, again all notifications from DB is loaded first then the process repeats.
-
-2. Clicking on Bell icon or Closing the Dropdown Marks all notifications as read.
-
-3. Clicking on 'Delete all notifications' truncates the DB and reloads the page.
+1. Page loads and it fetches for notifications from Database. Notifications are then rendered on page.
+1. Socket connection between Node Server and Client is established. Subsequent notifications are then sent to client using sockets.
+1. Node server generates new Notifications, pushes it to both Database and Client.
+1. On Page refresh, again all notifications from Database is loaded first then the process repeats.
+1. Clicking on Bell icon or Closing the Dropdown Marks all notifications as read.
+1. Clicking on 'Delete all notifications' truncates the Database and reloads the page.
 
 Why WebSockets ? Faster and smaller in size than http + suitable for these type of instant data transfer.
 
@@ -29,7 +23,7 @@ Why WebSockets ? Faster and smaller in size than http + suitable for these type 
 Extensive use of JavaScript ES6\. Short and Nice.<br>
 Strictly followed JavaScript style guide by [airbnb](https://github.com/airbnb/javascript), enforced the style guide using ESlint configs from [elsint-config-airbnb](https://www.npmjs.com/package/eslint-config-airbnb).
 
-Can do the same using other tech stacks, but this is the way I preffered for it to be **efficient, production ready and scalable** and also considering the given the short time period to code.
+Can do the same using other tech stacks, but this is the way I preffered for it to be **efficient, production ready and scalable**.
 
 View Layer: ReactJs
 - Could have also done the same with Vanilla JS, But React is faster, And I preffer it for dynamic, repeated component views.
