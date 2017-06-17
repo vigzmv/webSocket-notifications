@@ -8,7 +8,7 @@ class Main extends Component {
 
     this.state = {
       notifs: [],
-      unread: 0
+      unread: 0,
     };
   }
 
@@ -16,7 +16,7 @@ class Main extends Component {
     // Load notifications from DB the first time view loads
     this.loadFromDatabase();
 
-    document.addEventListener('click', e => {
+    document.addEventListener('click', (e) => {
       // console.log(e.target);
       const notifBox = document.querySelector('.dropdown');
       const bell = document.querySelector('.bell');
@@ -42,15 +42,15 @@ class Main extends Component {
     // marking all notifications as read in database
     axios.put('http://localhost:3001/api/notifications/');
     this.setState({ unread: 0 });
-    this.state.notifs.forEach(notif => {
+    this.state.notifs.forEach((notif) => {
       notif.read = true;
     });
   }
 
   loadFromDatabase() {
-    axios.get('http://localhost:3001/api/notifications/').then(res => {
+    axios.get('http://localhost:3001/api/notifications/').then((res) => {
       this.setState({
-        notifs: res.data
+        notifs: res.data,
       });
       this.setCount();
 
@@ -63,7 +63,7 @@ class Main extends Component {
     const socket = window.io.connect('http://localhost:3001');
 
     // On reciveing new-notification from server through Sockets & Update the View
-    socket.on('new-notification', data => {
+    socket.on('new-notification', (data) => {
       this.setState({
         notifs: [
           ...this.state.notifs,
@@ -72,9 +72,9 @@ class Main extends Component {
             name: data.name,
             content: data.content,
             read: data.read,
-            image: data.image
-          }
-        ]
+            image: data.image,
+          },
+        ],
       });
 
       this.setState({ unread: this.state.unread + 1 });
@@ -96,7 +96,7 @@ class Main extends Component {
       axios.put('http://localhost:3001/api/notifications/');
       this.setState({ unread: 0 });
       setTimeout(() => {
-        this.state.notifs.forEach(notif => {
+        this.state.notifs.forEach((notif) => {
           notif.read = true;
         });
       }, 500);
