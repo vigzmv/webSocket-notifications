@@ -20,7 +20,10 @@ app.use(bodyParser.json());
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Credentials', 'true');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT,DELETE');
+  res.setHeader(
+    'Access-Control-Allow-Methods',
+    'GET,HEAD,OPTIONS,POST,PUT,DELETE',
+  );
   res.setHeader(
     'Access-Control-Allow-Headers',
     'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Acc' +
@@ -111,7 +114,7 @@ io.on('connection', (socket) => {
       // Push new notification to client
       socket.emit('new-notification', notification);
     });
-  }, 2000 + Math.floor(Math.random() * 2000));
+  }, 3000 + Math.floor(Math.random() * 4000));
 
   socket.on('disconnect', () => {
     clearInterval(notificationsPush);
